@@ -172,12 +172,10 @@ WHERE
           ]),
         })
         .updateFrom(table_name)
-        .where(
-          pk.column_name,
-          database.raw("??", [
-            `${fk.foreign_table}.${get_old_foreign_name(fk)}`,
-          ])
-        );
+        .whereRaw("?? = ??", [
+          `${table_name}.${pk.column_name}`,
+          `${fk.foreign_table}.${get_old_foreign_name(fk)}`,
+        ]);
     }
 
     /**
